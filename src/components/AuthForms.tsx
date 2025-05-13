@@ -21,7 +21,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <h2 className="text-xl font-semibold text-gray-800">Log in to AppSplitting</h2>
+        <h2 className="text-xl font-semibold text-gray-800">Log in to SplitX</h2>
       </CardHeader>
       <CardBody>
         <form onSubmit={handleSubmit}>

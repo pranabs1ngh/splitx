@@ -16,7 +16,7 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
               <CreditCard className="h-8 w-8 text-teal-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">AppSplitting</span>
+              <span className="ml-2 text-xl font-bold text-gray-900">SplitX</span>
             </Link>
             {user && (
               <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">

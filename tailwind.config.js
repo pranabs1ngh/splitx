@@ -43,6 +43,14 @@ export default {
           900: '#7c2d12',
           950: '#431407',
         },
+        destructive: {
+          DEFAULT: "hsl(0 84.2% 60.2%)",
+          foreground: "hsl(0 0% 98%)",
+        },
+        muted: {
+          DEFAULT: "hsl(240 4.8% 95.9%)",
+          foreground: "hsl(240 3.8% 46.1%)",
+        },
       },
       boxShadow: {
         card: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',

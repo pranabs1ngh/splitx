@@ -4,7 +4,7 @@ import App from './App.tsx';
 import './index.css';
 
 // Update document title
-document.title = 'AppSplitting - Split Expenses with Friends';
+document.title = 'SplitX - Split Expenses with Friends';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
