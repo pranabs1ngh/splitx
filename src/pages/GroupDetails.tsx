@@ -9,11 +9,11 @@ import ExpenseList from '../components/ExpenseList';
 import BalanceSummary from '../components/BalanceSummary';
 import AddExpenseForm from '../components/AddExpenseForm';
 import AddSettlementForm from '../components/AddSettlementForm';
-import { Card, CardContent, CardHeader } from './ui/card';
-import { Button } from './ui/button';
-import { Skeleton } from './ui/skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Input } from './ui/input';
+import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Skeleton } from '../components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Input } from '../components/ui/input';
 
 const GroupDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
