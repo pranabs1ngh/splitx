@@ -4,8 +4,8 @@ import { CreditCard, Plus, ArrowRight, Users, BarChart, Check } from 'lucide-rea
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
 import Header from '../components/Header';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/card';
+import { Button } from '../components/ui/Button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/Card';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -103,13 +103,13 @@ const Dashboard: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-background flex flex-col dark">
-      <Header />
+      <Header dark />
       
       <main className="flex-grow py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Welcome section */}
           <div className="mb-8">
-            <h1 className="text-2xl font-bold">Welcome back, {user.name.split(' ')[0]}!</h1>
+            <h1 className="text-2xl text-white font-bold">Welcome back, {user.name.split(' ')[0]}!</h1>
             <p className="text-muted-foreground">Here's what's happening with your expenses</p>
           </div>
           
@@ -173,7 +173,7 @@ const Dashboard: React.FC = () => {
           {/* Recent groups */}
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Your Groups</h2>
+              <h2 className="text-xl font-semibold text-white">Your Groups</h2>
               <Link to="/groups" className="text-primary hover:underline">
                 View all
               </Link>
@@ -183,7 +183,7 @@ const Dashboard: React.FC = () => {
               <Card>
                 <CardContent className="text-center py-12">
                   <CreditCard className="h-12 w-12 mx-auto text-muted-foreground" />
-                  <h3 className="mt-2 text-lg font-medium">No groups yet</h3>
+                  <h3 className="mt-2 text-lg text-white font-medium">No groups yet</h3>
                   <p className="mt-1 text-muted-foreground">
                     Create your first group to start tracking expenses.
                   </p>
@@ -222,7 +222,7 @@ const Dashboard: React.FC = () => {
           {/* Recent activity */}
           <div>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Recent Activity</h2>
+              <h2 className="text-xl text-white font-semibold">Recent Activity</h2>
               <Link to="/activity" className="text-primary hover:underline">
                 View all
               </Link>

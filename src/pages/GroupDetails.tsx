@@ -9,11 +9,11 @@ import ExpenseList from '../components/ExpenseList';
 import BalanceSummary from '../components/BalanceSummary';
 import AddExpenseForm from '../components/AddExpenseForm';
 import AddSettlementForm from '../components/AddSettlementForm';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
-import { Button } from '../components/ui/button';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
 import { Skeleton } from '../components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Input } from '../components/ui/input';
+import Input from '../components/ui/Input';
 
 const GroupDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -108,8 +108,8 @@ const GroupDetails: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Header />
+    <div className="min-h-screen bg-background dark flex flex-col">
+      <Header dark />
       
       <main className="flex-grow py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -285,6 +285,7 @@ const GroupDetails: React.FC = () => {
                   groupId={groupDetails.id}
                   members={groupDetails.members}
                   currentUserId={user.id}
+                  onCancel={() => setIsAddingExpense(false)}
                   onSuccess={() => {
                     setIsAddingExpense(false);
                     refreshGroupDetails();
@@ -298,6 +299,7 @@ const GroupDetails: React.FC = () => {
                   members={groupDetails.members}
                   balances={groupDetails.balances}
                   currentUserId={user.id}
+                  onCancel={() => setIsAddingSettlement(false)}
                   onSuccess={() => {
                     setIsAddingSettlement(false);
                     refreshGroupDetails();
@@ -320,11 +322,9 @@ const GroupDetails: React.FC = () => {
                       
                       <div className="space-y-4">
                         <div className="space-y-2">
-                          <label htmlFor="inviteName" className="text-sm font-medium">
-                            Full Name
-                          </label>
                           <Input
                             id="inviteName"
+                            label="Full Name"
                             placeholder="John Doe"
                             value={inviteName}
                             onChange={(e) => setInviteName(e.target.value)}
@@ -333,11 +333,9 @@ const GroupDetails: React.FC = () => {
                         </div>
 
                         <div className="space-y-2">
-                          <label htmlFor="inviteEmail" className="text-sm font-medium">
-                            Email Address (Optional)
-                          </label>
                           <Input
                             id="inviteEmail"
+                            label="Email"
                             type="email"
                             placeholder="friend@example.com"
                             value={inviteEmail}
@@ -347,17 +345,17 @@ const GroupDetails: React.FC = () => {
                         
                         <div className="flex space-x-3">
                           <Button
+                            type="submit"
+                            disabled={!inviteName || isSubmittingInvite}
+                          >
+                            {isSubmittingInvite ? 'Adding...' : 'Add Member'}
+                          </Button>
+                          <Button
                             type="button"
                             variant="outline"
                             onClick={() => setIsInviting(false)}
                           >
                             Cancel
-                          </Button>
-                          <Button
-                            type="submit"
-                            disabled={!inviteName || isSubmittingInvite}
-                          >
-                            {isSubmittingInvite ? 'Adding...' : 'Add Member'}
                           </Button>
                         </div>
                       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CreditCard, Users, BarChart, Layers, Check, ArrowRight } from 'lucide-react';
 import Header from '../components/Header';
-import { Button } from '../components/ui/button';
+import { Button } from '../components/ui/Button';
 
 const Landing: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ const Landing: React.FC = () => {
                   Split expenses with friends without the awkwardness
                 </h1>
                 <p className="mt-4 text-xl text-muted-foreground">
-                  Track who owes what, settle up, and move on. AppSplitting makes it easy to share expenses with friends, roommates, or anyone.
+                  Track who owes what, settle up, and move on. SplitX makes it easy to share expenses with friends, roommates, or anyone.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row sm:space-x-4">
                   <Link to="/auth?register=true">
@@ -88,7 +88,7 @@ const Landing: React.FC = () => {
             <div className="text-center">
               <h2 className="text-3xl font-bold text-foreground">Features that make expense splitting easy</h2>
               <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto">
-                AppSplitting simplifies the process of tracking expenses and settling debts within groups.
+                SplitX simplifies the process of tracking expenses and settling debts within groups.
               </p>
             </div>
             
@@ -140,7 +140,7 @@ const Landing: React.FC = () => {
             <div className="text-center">
               <h2 className="text-3xl font-bold text-foreground">Ready to start splitting expenses?</h2>
               <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto">
-                Join thousands of users who have simplified their shared expenses with AppSplitting.
+                Join thousands of users who have simplified their shared expenses with SplitX.
               </p>
               <div className="mt-8">
                 <Link to="/auth?register=true">
@@ -160,7 +160,7 @@ const Landing: React.FC = () => {
             <div>
               <div className="flex items-center">
                 <CreditCard className="h-8 w-8 text-primary" />
-                <span className="ml-2 text-xl font-bold text-foreground">AppSplitting</span>
+                <span className="ml-2 text-xl font-bold text-foreground">SplitX</span>
               </div>
               <p className="mt-4 text-muted-foreground">
                 Simplifying the way friends, roommates, and travelers split expenses.
@@ -197,7 +197,7 @@ const Landing: React.FC = () => {
           </div>
           
           <div className="mt-12 pt-8 border-t border-border text-center">
-            <p className="text-muted-foreground">&copy; {new Date().getFullYear()} AppSplitting. All rights reserved.</p>
+            <p className="text-muted-foreground">&copy; {new Date().getFullYear()} SplitX. All rights reserved.</p>
           </div>
         </div>
       </footer>

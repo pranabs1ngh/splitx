@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { Balance } from '../types';
-import Card, { CardBody } from './ui/Card';
+import { Card, CardContent } from './ui/Card';
 
 interface BalanceSummaryProps {
   balances: Record<string, Balance>;
@@ -45,7 +45,7 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
         <div className="h-7 bg-gray-200 rounded w-48 animate-pulse"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card>
-            <CardBody>
+            <CardContent>
               <div className="flex items-center animate-pulse">
                 <div className="h-12 w-12 rounded-full bg-gray-200"></div>
                 <div className="ml-4">
@@ -53,10 +53,10 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
                   <div className="h-6 bg-gray-200 rounded w-24"></div>
                 </div>
               </div>
-            </CardBody>
+            </CardContent>
           </Card>
           <Card>
-            <CardBody>
+            <CardContent>
               <div className="flex items-center animate-pulse">
                 <div className="h-12 w-12 rounded-full bg-gray-200"></div>
                 <div className="ml-4">
@@ -64,7 +64,7 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
                   <div className="h-6 bg-gray-200 rounded w-24"></div>
                 </div>
               </div>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
       </div>
@@ -73,35 +73,35 @@ const BalanceSummary: React.FC<BalanceSummaryProps> = ({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900">Balance Summary</h2>
+      <h2 className="text-xl mt-4 font-semibold text-white">Balance Summary</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
-          <CardBody>
+          <CardContent className='pt-6'>
             <div className="flex items-center">
               <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
                 <ArrowUpRight className="h-6 w-6 text-green-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-500">Total owed to you</p>
-                <h3 className="text-xl font-semibold text-gray-900">{formatCurrency(totalOwed)}</h3>
+                <h3 className="text-xl font-semibold text-white">{formatCurrency(totalOwed)}</h3>
               </div>
             </div>
-          </CardBody>
+          </CardContent>
         </Card>
         
         <Card>
-          <CardBody>
+          <CardContent className='pt-6'>
             <div className="flex items-center">
               <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
                 <ArrowDownRight className="h-6 w-6 text-red-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-500">Total you owe</p>
-                <h3 className="text-xl font-semibold text-gray-900">{formatCurrency(totalOwes)}</h3>
+                <h3 className="text-xl font-semibold text-white">{formatCurrency(totalOwes)}</h3>
               </div>
             </div>
-          </CardBody>
+          </CardContent>
         </Card>
       </div>
     </div>

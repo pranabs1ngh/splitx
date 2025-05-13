@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { User, Balance } from '../types';
-import Card, { CardHeader, CardBody } from './ui/Card';
-import Button from './ui/Button';
+import { Card, CardHeader, CardContent } from './ui/Card';
+import {Button} from './ui/Button';
 import Input from './ui/Input';
 
 interface AddSettlementFormProps {
@@ -11,6 +11,7 @@ interface AddSettlementFormProps {
   balances: Record<string, Balance>;
   currentUserId: string;
   onSuccess: () => void;
+  onCancel: () => void;
 }
 
 const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
@@ -19,6 +20,7 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
   balances,
   currentUserId,
   onSuccess,
+  onCancel
 }) => {
   const { addSettlement, error } = useData();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,9 +98,9 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-lg font-medium text-gray-900">Record a Settlement</h3>
+        <h3 className="text-lg font-medium text-white">Record a Settlement</h3>
       </CardHeader>
-      <CardBody>
+      <CardContent>
         <form onSubmit={handleSubmit}>
           {error && (
             <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
@@ -107,7 +109,7 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
           )}
           
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-400 mb-1">
               Who paid?
             </label>
             <select
@@ -120,7 +122,7 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
                   if (suggestedAmount) setAmount(suggestedAmount);
                 }
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="w-full text-gray-900 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black-500 focus:border-black-500"
             >
               <option value="">Select who paid</option>
               {debtors.map((member) => (
@@ -133,7 +135,7 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
           </div>
           
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-400 mb-1">
               Who received the payment?
             </label>
             <select
@@ -146,7 +148,7 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
                   if (suggestedAmount) setAmount(suggestedAmount);
                 }
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black-500 focus:border-black-500"
             >
               <option value="">Select who received</option>
               {creditors.map((member) => (
@@ -177,9 +179,12 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
             >
               Record Settlement
             </Button>
+            <Button onClick={onCancel} variant="outline" className='ml-2'>
+              Cancel
+            </Button>
           </div>
         </form>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 };

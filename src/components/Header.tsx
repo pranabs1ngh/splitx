@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CreditCard, User, LogOut, Settings, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { Button } from './ui/button';
+import { Button } from './ui/Button';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -18,9 +18,11 @@ import {
 } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback } from './ui/avatar';
 
-const Header: React.FC = () => {
+const Header: React.FC = ({ dark }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  const text = dark ? 'text-white' : '';
 
   return (
     <header className="border-b">
@@ -28,15 +30,15 @@ const Header: React.FC = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
-              <CreditCard className="h-8 w-8" />
-              <span className="ml-2 text-xl font-bold">AppSplitting</span>
+              <CreditCard className={`h-8 w-8 ${text}`} />
+              <span className={`ml-2 text-xl ${text} font-bold`}>SplitX</span>
             </Link>
             {user && (
               <NavigationMenu className="ml-6">
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuLink
-                      className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                      className={`${text} group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50`}
                       href="/dashboard"
                     >
                       Dashboard
@@ -44,7 +46,7 @@ const Header: React.FC = () => {
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <NavigationMenuLink
-                      className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                      className={`${text} group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50`}
                       href="/groups"
                     >
                       My Groups
@@ -52,7 +54,7 @@ const Header: React.FC = () => {
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <NavigationMenuLink
-                      className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                      className={`${text} group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50`}
                       href="/activity"
                     >
                       Activity
@@ -77,7 +79,7 @@ const Header: React.FC = () => {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                       <Avatar>
-                        <AvatarFallback>
+                        <AvatarFallback className='text-white'>
                           {user.name.split(' ').map(n => n[0]).join('')}
                         </AvatarFallback>
                       </Avatar>

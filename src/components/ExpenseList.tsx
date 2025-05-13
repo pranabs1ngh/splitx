@@ -1,7 +1,7 @@
 import React from 'react';
 import { CreditCard, User } from 'lucide-react';
 import { Expense } from '../types';
-import Card, { CardBody } from './ui/Card';
+import { Card } from './ui/Card';
 
 interface ExpenseListProps {
   expenses: Expense[];
@@ -54,7 +54,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, isLoading = false }
     return (
       <div className="text-center py-8">
         <CreditCard className="h-12 w-12 mx-auto text-gray-400" />
-        <h3 className="mt-2 text-sm font-medium text-gray-900">No expenses yet</h3>
+        <h3 className="mt-2 text-sm font-medium text-white">No expenses yet</h3>
         <p className="mt-1 text-sm text-gray-500">
           Add your first expense to start tracking.
         </p>
@@ -73,13 +73,13 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, isLoading = false }
         <Card key={expense.id} className="overflow-hidden">
           <div className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center">
             <div className="mb-4 sm:mb-0">
-              <div className="h-10 w-10 rounded-full bg-teal-100 flex items-center justify-center">
-                <CreditCard className="h-5 w-5 text-teal-600" />
+              <div className="h-10 w-10 rounded-full bg-black-100 flex items-center justify-center">
+                <CreditCard className="h-5 w-5 text-black-600" />
               </div>
             </div>
             
             <div className="sm:ml-4 flex-1">
-              <h4 className="text-lg font-medium text-gray-900">{expense.description}</h4>
+              <h4 className="text-lg font-medium text-white">{expense.description}</h4>
               <div className="mt-1 flex items-center text-sm text-gray-500">
                 <User className="h-4 w-4 mr-1" />
                 <span>
@@ -94,7 +94,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, isLoading = false }
             </div>
             
             <div className="mt-4 sm:mt-0 sm:ml-6">
-              <span className="text-xl font-semibold text-gray-900">
+              <span className="text-xl font-semibold text-white">
                 {formatCurrency(expense.amount)}
               </span>
             </div>

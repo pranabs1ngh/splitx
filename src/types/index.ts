@@ -1,4 +1,4 @@
-// Type definitions for the AppSplitting application
+// Type definitions for the SplitX application
 
 export interface User {
   id: string;
