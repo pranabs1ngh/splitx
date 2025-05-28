@@ -5,9 +5,11 @@ import Header from '../components/Header';
 import {Card, CardHeader, CardContent } from '../components/ui/Card';
 import {Button} from '../components/ui/Button';
 import Input from '../components/ui/Input';
+import { useNavigate } from 'react-router-dom';
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
@@ -136,7 +138,11 @@ const Profile: React.FC = () => {
                   <div>
                     <h3 className="text-base font-medium text-white">Password</h3>
                     <p className="text-sm text-gray-500 mt-1">Update your password to keep your account secure.</p>
-                    <Button variant="outline" className="mt-3">
+                    <Button 
+                      variant="outline" 
+                      className="mt-3"
+                      onClick={() => navigate('/reset-password')}
+                    >
                       Change Password
                     </Button>
                   </div>
