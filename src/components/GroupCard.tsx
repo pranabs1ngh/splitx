@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Calendar } from 'lucide-react';
 import { Group } from '../types';
-import Card, { CardBody } from './ui/Card';
+import {Card,  CardContent } from './ui/Card';
 
 interface GroupCardProps {
   group: Group;
@@ -23,7 +23,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group, isLoading = false }) => {
   if (isLoading) {
     return (
       <Card className="h-full">
-        <CardBody>
+        <CardContent>
           <div className="animate-pulse">
             <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
             <div className="h-4 bg-gray-200 rounded w-full mb-4"></div>
@@ -32,7 +32,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group, isLoading = false }) => {
               <div className="h-4 bg-gray-200 rounded w-1/3"></div>
             </div>
           </div>
-        </CardBody>
+        </CardContent>
       </Card>
     );
   }
@@ -40,8 +40,8 @@ const GroupCard: React.FC<GroupCardProps> = ({ group, isLoading = false }) => {
   return (
     <Link to={`/groups/${group.id}`}>
       <Card className="h-full hover:shadow-lg transition-shadow duration-300">
-        <CardBody>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">{group.name}</h3>
+        <CardContent>
+          <h3 className="text-lg font-semibold text-white mb-2">{group.name}</h3>
           <p className="text-gray-600 text-sm mb-4 line-clamp-2">{group.description}</p>
           
           <div className="flex items-center text-sm text-gray-500 mt-auto">
@@ -53,7 +53,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group, isLoading = false }) => {
               <span>{formatDate(group.createdAt)}</span>
             </div>
           </div>
-        </CardBody>
+        </CardContent>
       </Card>
     </Link>
   );

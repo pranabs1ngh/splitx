@@ -1,5 +1,5 @@
 /*
-  # Initial Schema Setup for AppSplitting
+  # Initial Schema Setup for SplitX
 
   1. New Tables
     - `profiles`

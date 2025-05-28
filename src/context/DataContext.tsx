@@ -34,11 +34,23 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
 
       setIsLoading(true);
       try {
-        const { data, error } = await supabase
+          // First, get the groups the user belongs to
+          const { data: userGroups, error: userGroupsError } = await supabase
+          .from('group_members')
+          .select('group_id')
+          .eq('user_id', user.id);
+        
+          if (userGroupsError) {
+            console.error('Error fetching user groups:', userGroupsError);
+            return;
+          }
+
+          // Then fetch all members for those groups
+          const { data, error } = await supabase
           .from('groups')
           .select(`
             *,
-            group_members!inner (
+            group_members (
               user_id,
               profiles (
                 id,
@@ -47,7 +59,8 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
               )
             )
           `)
-          .eq('group_members.user_id', user.id);
+          .in('id', userGroups.map(group => group.group_id))
+          .order('created_at');
 
         if (error) throw error;
 

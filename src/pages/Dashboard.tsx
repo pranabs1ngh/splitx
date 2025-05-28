@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CreditCard, Plus, ArrowRight } from 'lucide-react';
+import { CreditCard, Plus, ArrowRight, Users, BarChart, Check } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
 import Header from '../components/Header';
-import GroupCard from '../components/GroupCard';
-import Card, { CardBody } from '../components/ui/Card';
-import Button from '../components/ui/Button';
-import { GroupWithDetails } from '../types';
+import { Button } from '../components/ui/Button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/Card';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -39,14 +37,6 @@ const Dashboard: React.FC = () => {
     }).format(date);
   };
   
-  // Calculate total balance
-  const calculateTotalBalance = (groupDetails: GroupWithDetails) => {
-    if (!user) return 0;
-    
-    const userBalance = groupDetails.balances[user.id];
-    return userBalance ? userBalance.amount : 0;
-  };
-  
   useEffect(() => {
     const fetchRecentActivity = async () => {
       if (!user) return;
@@ -55,14 +45,12 @@ const Dashboard: React.FC = () => {
         setIsLoadingActivity(true);
         const activities: typeof recentActivity = [];
         
-        // Only fetch details for the most recent groups
         const groupsToFetch = groups.slice(0, 3);
         
         for (const group of groupsToFetch) {
           const details = await getGroupDetails(group.id);
           if (!details) continue;
           
-          // Combine expenses and settlements
           const groupActivities = [
             ...details.expenses.map(expense => ({
               type: 'expense' as const,
@@ -85,7 +73,6 @@ const Dashboard: React.FC = () => {
           activities.push(...groupActivities);
         }
         
-        // Sort by date (newest first) and update state
         const sortedActivities = activities.sort(
           (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
         );
@@ -99,118 +86,135 @@ const Dashboard: React.FC = () => {
     };
     
     fetchRecentActivity();
-  }, [groups, user?.id]); // Only re-run when groups or user ID changes
+  }, [groups, user?.id]);
   
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-background flex flex-col">
         <Header />
         <main className="flex-grow flex items-center justify-center">
-          <div className="text-gray-600">Please log in to view the dashboard.</div>
+          <div className="text-muted-foreground">Please log in to view the dashboard.</div>
         </main>
       </div>
     );
   }
   
-  // Sort and limit recent activity
   const sortedActivity = recentActivity.slice(0, 5);
   
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header />
+    <div className="min-h-screen bg-background flex flex-col dark">
+      <Header dark />
       
       <main className="flex-grow py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Welcome section */}
           <div className="mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Welcome back, {user.name.split(' ')[0]}!</h1>
-            <p className="text-gray-600">Here's what's happening with your expenses</p>
+            <h1 className="text-2xl text-white font-bold">Welcome back, {user.name.split(' ')[0]}!</h1>
+            <p className="text-muted-foreground">Here's what's happening with your expenses</p>
           </div>
           
           {/* Quick actions */}
           <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="bg-gradient-to-r from-teal-500 to-teal-600 text-white">
-              <CardBody>
-                <h2 className="text-lg font-semibold mb-2">Create a New Group</h2>
-                <p className="text-teal-50 mb-4">Start tracking expenses with friends or roommates</p>
-                <Link to="/groups/new">
-                  <Button variant="outline" className="bg-white text-teal-600 hover:bg-teal-50">
-                    <Plus className="h-4 w-4 mr-1" />
+            <Card>
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>Create a New Group</CardTitle>
+                <CardDescription>Start tracking expenses with friends or roommates</CardDescription>
+              </CardHeader>
+              <CardFooter>
+                <Link to="/groups/new" className="w-full">
+                  <Button className="w-full">
+                    <Plus className="h-4 w-4 mr-2" />
                     New Group
                   </Button>
                 </Link>
-              </CardBody>
+              </CardFooter>
             </Card>
             
-            <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
-              <CardBody>
-                <h2 className="text-lg font-semibold mb-2">Add an Expense</h2>
-                <p className="text-purple-50 mb-4">Record a new expense in any of your groups</p>
-                <Link to="/groups">
-                  <Button variant="outline" className="bg-white text-purple-600 hover:bg-purple-50">
-                    <CreditCard className="h-4 w-4 mr-1" />
+            <Card>
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <CreditCard className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>Add an Expense</CardTitle>
+                <CardDescription>Record a new expense in any of your groups</CardDescription>
+              </CardHeader>
+              <CardFooter>
+                <Link to="/groups" className="w-full">
+                  <Button variant="outline" className="w-full">
+                    <CreditCard className="h-4 w-4 mr-2" />
                     Add Expense
                   </Button>
                 </Link>
-              </CardBody>
+              </CardFooter>
             </Card>
             
-            <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-              <CardBody>
-                <h2 className="text-lg font-semibold mb-2">View Activity</h2>
-                <p className="text-orange-50 mb-4">See all recent expenses and settlements</p>
-                <Link to="/activity">
-                  <Button variant="outline" className="bg-white text-orange-600 hover:bg-orange-50">
-                    <ArrowRight className="h-4 w-4 mr-1" />
+            <Card>
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <BarChart className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>View Activity</CardTitle>
+                <CardDescription>See all recent expenses and settlements</CardDescription>
+              </CardHeader>
+              <CardFooter>
+                <Link to="/activity" className="w-full">
+                  <Button variant="outline" className="w-full">
+                    <ArrowRight className="h-4 w-4 mr-2" />
                     View All
                   </Button>
                 </Link>
-              </CardBody>
+              </CardFooter>
             </Card>
           </div>
           
           {/* Recent groups */}
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Your Groups</h2>
-              <Link to="/groups" className="text-teal-600 font-medium hover:text-teal-500">
+              <h2 className="text-xl font-semibold text-white">Your Groups</h2>
+              <Link to="/groups" className="text-primary hover:underline">
                 View all
               </Link>
             </div>
             
             {groups.length === 0 ? (
-              <Card className="bg-white">
-                <CardBody className="text-center py-12">
-                  <CreditCard className="h-12 w-12 mx-auto text-gray-400" />
-                  <h3 className="mt-2 text-lg font-medium text-gray-900">No groups yet</h3>
-                  <p className="mt-1 text-gray-500">
+              <Card>
+                <CardContent className="text-center py-12">
+                  <CreditCard className="h-12 w-12 mx-auto text-muted-foreground" />
+                  <h3 className="mt-2 text-lg text-white font-medium">No groups yet</h3>
+                  <p className="mt-1 text-muted-foreground">
                     Create your first group to start tracking expenses.
                   </p>
                   <div className="mt-6">
                     <Link to="/groups/new">
                       <Button>
-                        <Plus className="h-4 w-4 mr-1" />
+                        <Plus className="h-4 w-4 mr-2" />
                         Create Group
                       </Button>
                     </Link>
                   </div>
-                </CardBody>
+                </CardContent>
               </Card>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {groups.slice(0, 3).map((group) => (
-                  <GroupCard key={group.id} group={group} />
-                ))}
-                
-                {groups.length > 3 && (
-                  <Link
-                    to="/groups"
-                    className="flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-teal-500 hover:bg-teal-50 transition-colors"
-                  >
-                    <span className="text-gray-600 font-medium">View all groups</span>
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                  <Link key={group.id} to={`/groups/${group.id}`}>
+                    <Card className="h-full hover:bg-muted/50 transition-colors">
+                      <CardHeader>
+                        <CardTitle>{group.name}</CardTitle>
+                        <CardDescription className="line-clamp-2">{group.description}</CardDescription>
+                      </CardHeader>
+                      <CardFooter>
+                        <div className="flex items-center text-sm text-muted-foreground">
+                          <Users className="h-4 w-4 mr-1" />
+                          <span>{group.members?.length || 0} members</span>
+                        </div>
+                      </CardFooter>
+                    </Card>
                   </Link>
-                )}
+                ))}
               </div>
             )}
           </div>
@@ -218,65 +222,62 @@ const Dashboard: React.FC = () => {
           {/* Recent activity */}
           <div>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Recent Activity</h2>
-              <Link to="/activity" className="text-teal-600 font-medium hover:text-teal-500">
+              <h2 className="text-xl text-white font-semibold">Recent Activity</h2>
+              <Link to="/activity" className="text-primary hover:underline">
                 View all
               </Link>
             </div>
             
-            {isLoadingActivity ? (
-              <Card className="bg-white">
-                <div className="divide-y divide-gray-200">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <div key={i} className="p-4">
-                      <div className="animate-pulse flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-gray-200"></div>
+            <Card>
+              {isLoadingActivity ? (
+                <CardContent className="py-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="py-4 animate-pulse">
+                      <div className="flex items-center">
+                        <div className="h-10 w-10 rounded-full bg-muted"></div>
                         <div className="ml-4 flex-1">
-                          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                          <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                          <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                          <div className="h-3 bg-muted rounded w-1/2"></div>
                         </div>
-                        <div className="h-5 bg-gray-200 rounded w-20"></div>
+                        <div className="h-5 bg-muted rounded w-20"></div>
                       </div>
                     </div>
                   ))}
-                </div>
-              </Card>
-            ) : sortedActivity.length === 0 ? (
-              <Card className="bg-white">
-                <CardBody className="text-center py-10">
-                  <p className="text-gray-500">No recent activity</p>
-                </CardBody>
-              </Card>
-            ) : (
-              <Card className="bg-white divide-y divide-gray-200">
-                {sortedActivity.map((activity, index) => (
-                  <div key={index} className="p-4 hover:bg-gray-50">
-                    <div className="flex items-center">
-                      <div className={`h-10 w-10 rounded-full flex items-center justify-center ${
-                        activity.type === 'expense' ? 'bg-purple-100' : 'bg-green-100'
-                      }`}>
-                        <CreditCard className={`h-5 w-5 ${
-                          activity.type === 'expense' ? 'text-purple-600' : 'text-green-600'
-                        }`} />
-                      </div>
-                      <div className="ml-4 flex-1">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">{activity.description}</p>
-                            <p className="text-xs text-gray-500">
-                              {activity.groupName} • {formatDate(activity.date)}
-                            </p>
-                          </div>
-                          <span className="text-sm font-medium text-gray-900">
-                            {formatCurrency(activity.amount)}
-                          </span>
+                </CardContent>
+              ) : sortedActivity.length === 0 ? (
+                <CardContent className="text-center py-10">
+                  <p className="text-muted-foreground">No recent activity</p>
+                </CardContent>
+              ) : (
+                <CardContent className="p-0">
+                  {sortedActivity.map((activity, index) => (
+                    <div
+                      key={index}
+                      className="p-4 hover:bg-muted/50 transition-colors border-b last:border-0"
+                    >
+                      <div className="flex items-center">
+                        <div className={`h-10 w-10 rounded-full flex items-center justify-center bg-primary/10`}>
+                          {activity.type === 'expense' ? (
+                            <CreditCard className="h-5 w-5 text-primary" />
+                          ) : (
+                            <Check className="h-5 w-5 text-primary" />
+                          )}
                         </div>
+                        <div className="ml-4 flex-1">
+                          <p className="font-medium">{activity.description}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {activity.groupName} • {formatDate(activity.date)}
+                          </p>
+                        </div>
+                        <span className="font-medium">
+                          {formatCurrency(activity.amount)}
+                        </span>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </Card>
-            )}
+                  ))}
+                </CardContent>
+              )}
+            </Card>
           </div>
         </div>
       </main>

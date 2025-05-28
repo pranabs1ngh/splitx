@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import Input from './ui/Input';
-import Button from './ui/Button';
-import Card, { CardHeader, CardBody, CardFooter } from './ui/Card';
+import {Button} from './ui/Button';
+import { Card, CardHeader, CardContent, CardFooter } from './ui/Card';
 
 interface LoginFormProps {
   onSwitchToRegister: () => void;
@@ -21,9 +21,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <h2 className="text-xl font-semibold text-gray-800">Log in to AppSplitting</h2>
+        <h2 className="text-xl font-semibold text-gray-50">Log in to SplitX</h2>
       </CardHeader>
-      <CardBody>
+      <CardContent>
         <form onSubmit={handleSubmit}>
           {error && (
             <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
@@ -53,13 +53,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
               <input
                 id="remember"
                 type="checkbox"
-                className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                className="h-4 w-4 text-black-600 focus:ring-black-500 border-gray-300 rounded"
               />
-              <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
+              <label htmlFor="remember" className="ml-2 block text-sm text-gray-400">
                 Remember me
               </label>
             </div>
-            <a href="#" className="text-sm text-teal-600 hover:text-teal-500">
+            <a href="#" className="text-sm text-black-600 hover:text-black-500">
               Forgot password?
             </a>
           </div>
@@ -67,13 +67,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
             Log in
           </Button>
         </form>
-      </CardBody>
+      </CardContent>
       <CardFooter className="text-center">
         <p className="text-sm text-gray-600">
           Don't have an account?{' '}
           <button
             onClick={onSwitchToRegister}
-            className="text-teal-600 hover:text-teal-500 font-medium"
+            className="text-black-600 hover:text-black-500 font-medium"
           >
             Sign up
           </button>
@@ -112,7 +112,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
       <CardHeader>
         <h2 className="text-xl font-semibold text-gray-800">Create your account</h2>
       </CardHeader>
-      <CardBody>
+      <CardContent>
         <form onSubmit={handleSubmit}>
           {error && (
             <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
@@ -160,13 +160,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             Create Account
           </Button>
         </form>
-      </CardBody>
+      </CardContent>
       <CardFooter className="text-center">
         <p className="text-sm text-gray-600">
           Already have an account?{' '}
           <button
             onClick={onSwitchToLogin}
-            className="text-teal-600 hover:text-teal-500 font-medium"
+            className="text-black-600 hover:text-black-500 font-medium"
           >
             Log in
           </button>
