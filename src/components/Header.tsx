@@ -110,6 +110,7 @@ const Header: React.FC = ({ dark }) => {
             ) : (
               <div className="flex space-x-4">
                 <Button
+                  className={dark ? 'text-white bg-gray-900' : ''}
                   variant="ghost"
                   onClick={() => navigate('/auth')}
                 >
