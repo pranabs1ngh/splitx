@@ -25,8 +25,8 @@ const Profile: React.FC = () => {
   }
   
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header />
+    <div className="min-h-screen bg-background flex flex-col dark">
+      <Header dark />
       
       <main className="flex-grow py-6">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -176,13 +176,13 @@ const Profile: React.FC = () => {
           </div>
           
           <div className="mt-6">
-            <Card>
+            <Card className="">
               <CardContent>
-                <h3 className="text-base font-medium text-red-700">Danger Zone</h3>
+                <h3 className="mt-6 text-base font-medium">Danger Zone</h3>
                 <p className="text-sm text-gray-500 mt-1">
                   Once you delete your account, there is no going back. Please be certain.
                 </p>
-                <Button variant="danger" className="mt-3">
+                <Button variant="outline"  className="mt-3 text-red-700">
                   Delete Account
                 </Button>
               </CardContent>
