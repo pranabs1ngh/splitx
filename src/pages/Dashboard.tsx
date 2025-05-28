@@ -7,6 +7,9 @@ import Header from '../components/Header';
 import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/Card';
 
+const CACHE_KEY = 'recent_activity_cache';
+const CACHE_EXPIRY = 5 * 60 * 1000; // 5 minutes in milliseconds
+
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { groups, getGroupDetails } = useData();
@@ -19,6 +22,7 @@ const Dashboard: React.FC = () => {
     groupName: string;
   }[]>([]);
   const [isLoadingActivity, setIsLoadingActivity] = useState(true);
+  const [isLoadingGroups, setIsLoadingGroups] = useState(true);
   
   // Format currency
   const formatCurrency = (amount: number) => {
@@ -36,6 +40,34 @@ const Dashboard: React.FC = () => {
       day: 'numeric',
     }).format(date);
   };
+
+  // Load cached activity
+  const loadCachedActivity = () => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_EXPIRY) {
+          return data;
+        }
+      }
+    } catch (err) {
+      console.error('Error loading cached activity:', err);
+    }
+    return null;
+  };
+
+  // Save activity to cache
+  const saveActivityToCache = (activity: typeof recentActivity) => {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({
+        data: activity,
+        timestamp: Date.now()
+      }));
+    } catch (err) {
+      console.error('Error saving activity to cache:', err);
+    }
+  };
   
   useEffect(() => {
     const fetchRecentActivity = async () => {
@@ -43,6 +75,15 @@ const Dashboard: React.FC = () => {
       
       try {
         setIsLoadingActivity(true);
+        
+        // Try to load from cache first
+        const cachedActivity = loadCachedActivity();
+        if (cachedActivity) {
+          setRecentActivity(cachedActivity);
+          setIsLoadingActivity(false);
+          return;
+        }
+        
         const activities: typeof recentActivity = [];
         
         const groupsToFetch = groups.slice(0, 3);
@@ -78,6 +119,7 @@ const Dashboard: React.FC = () => {
         );
         
         setRecentActivity(sortedActivities);
+        saveActivityToCache(sortedActivities);
       } catch (err) {
         console.error('Error fetching activity:', err);
       } finally {
@@ -87,6 +129,13 @@ const Dashboard: React.FC = () => {
     
     fetchRecentActivity();
   }, [groups, user?.id]);
+
+  // Set loading state for groups
+  useEffect(() => {
+    if (groups) {
+      setIsLoadingGroups(false);
+    }
+  }, [groups]);
   
   if (!user) {
     return (
@@ -179,7 +228,23 @@ const Dashboard: React.FC = () => {
               </Link>
             </div>
             
-            {groups.length === 0 ? (
+            {isLoadingGroups ? (
+              <Card>
+                <CardContent className="py-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="py-4 animate-pulse">
+                      <div className="flex items-center">
+                        <div className="h-10 w-10 rounded-full bg-muted"></div>
+                        <div className="ml-4 flex-1">
+                          <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                          <div className="h-3 bg-muted rounded w-1/2"></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            ) : groups.length === 0 ? (
               <Card>
                 <CardContent className="text-center py-12">
                   <CreditCard className="h-12 w-12 mx-auto text-muted-foreground" />
