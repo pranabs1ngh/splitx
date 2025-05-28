@@ -78,7 +78,7 @@ const Dashboard: React.FC = () => {
         
         // Try to load from cache first
         const cachedActivity = loadCachedActivity();
-        if (cachedActivity) {
+        if (cachedActivity && cachedActivity.length > 0) {
           setRecentActivity(cachedActivity);
           setIsLoadingActivity(false);
           return;
@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
         const activities: typeof recentActivity = [];
         
         const groupsToFetch = groups.slice(0, 3);
-        
+
         for (const group of groupsToFetch) {
           const details = await getGroupDetails(group.id);
           if (!details) continue;
@@ -132,7 +132,7 @@ const Dashboard: React.FC = () => {
 
   // Set loading state for groups
   useEffect(() => {
-    if (groups) {
+    if (groups && groups.length > 0) {
       setIsLoadingGroups(false);
     }
   }, [groups]);
@@ -229,21 +229,28 @@ const Dashboard: React.FC = () => {
             </div>
             
             {isLoadingGroups ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
               <Card>
                 <CardContent className="py-4">
-                  {[1, 2, 3].map((i) => (
                     <div key={i} className="py-4 animate-pulse">
                       <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-muted"></div>
+                        <div className="ml-4 flex-1">
+                          <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                          <div className="h-3 bg-muted rounded w-1/2"></div>
+                        </div>
+                      </div>
+                      <div className="flex items-center mt-3">
                         <div className="ml-4 flex-1">
                           <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
                           <div className="h-3 bg-muted rounded w-1/2"></div>
                         </div>
                       </div>
                     </div>
-                  ))}
                 </CardContent>
               </Card>
+              ))}
+            </div>
             ) : groups.length === 0 ? (
               <Card>
                 <CardContent className="text-center py-12">
