@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { User } from '../types';
-import Card, { CardHeader, CardBody, CardFooter } from './ui/Card';
-import Button from './ui/Button';
+import {Card, CardHeader, CardContent } from './ui/Card';
+import {Button} from './ui/Button';
 import Input from './ui/Input';
 
 interface AddExpenseFormProps {
@@ -10,6 +10,7 @@ interface AddExpenseFormProps {
   members: User[];
   currentUserId: string;
   onSuccess: () => void;
+  onCancel: () => void;
 }
 
 const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
@@ -17,6 +18,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
   members,
   currentUserId,
   onSuccess,
+  onCancel
 }) => {
   const { addExpense, error } = useData();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,9 +73,9 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-lg font-medium text-gray-900">Add New Expense</h3>
+        <h3 className="text-lg font-medium text-white">Add New Expense</h3>
       </CardHeader>
-      <CardBody>
+      <CardContent>
         <form onSubmit={handleSubmit}>
           {error && (
             <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
@@ -101,13 +103,13 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
           />
           
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-400 mb-1">
               Paid by
             </label>
             <select
               value={paidBy}
               onChange={(e) => setPaidBy(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black-500 focus:border-black-500"
             >
               {members.map((member) => (
                 <option key={member.id} value={member.id}>
@@ -118,10 +120,10 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
           </div>
           
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-400 mb-1">
               Split between
             </label>
-            <div className="space-y-2">
+            <div className="space-y-2 py-1 grid grid-cols-2 gap-2">
               {members.map((member) => (
                 <div key={member.id} className="flex items-center">
                   <input
@@ -129,11 +131,11 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
                     id={`member-${member.id}`}
                     checked={splitBetween.includes(member.id)}
                     onChange={() => handleMemberToggle(member.id)}
-                    className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-black-600 focus:ring-black-500 border-gray-300 rounded"
                   />
                   <label
                     htmlFor={`member-${member.id}`}
-                    className="ml-2 block text-sm text-gray-700"
+                    className="ml-2 block text-sm text-gray-400"
                   >
                     {member.id === currentUserId ? 'You' : member.name}
                   </label>
@@ -146,9 +148,12 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
             <Button type="submit" fullWidth isLoading={isSubmitting}>
               Add Expense
             </Button>
+            <Button onClick={onCancel} variant="outline" className='ml-2' fullWidth>
+              Cancel
+            </Button>
           </div>
         </form>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 };

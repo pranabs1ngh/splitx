@@ -1,98 +1,122 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, LogOut, Settings, Plus, CreditCard } from 'lucide-react';
+import { CreditCard, User, LogOut, Settings, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import Button from './ui/Button';
+import { Button } from './ui/Button';
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from './ui/navigation-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
+import { Avatar, AvatarFallback } from './ui/avatar';
 
-const Header: React.FC = () => {
+const Header: React.FC = ({ dark }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const text = dark ? 'text-white' : '';
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
-              <CreditCard className="h-8 w-8 text-teal-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">AppSplitting</span>
+              <CreditCard className={`h-8 w-8 ${text}`} />
+              <span className={`ml-2 text-xl ${text} font-bold`}>SplitX</span>
             </Link>
             {user && (
-              <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <Link
-                  to="/dashboard"
-                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="/groups"
-                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  My Groups
-                </Link>
-                <Link
-                  to="/activity"
-                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  Activity
-                </Link>
-              </nav>
+              <NavigationMenu className="ml-6">
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      className={`${text} group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50`}
+                      href="/dashboard"
+                    >
+                      Dashboard
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      className={`${text} group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50`}
+                      href="/groups"
+                    >
+                      My Groups
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      className={`${text} group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50`}
+                      href="/activity"
+                    >
+                      Activity
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             )}
           </div>
           
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+          <div className="flex items-center">
             {user ? (
-              <div className="ml-3 relative flex items-center">
+              <div className="flex items-center space-x-4">
                 <Link to="/groups/new">
-                  <Button variant="primary" size="sm">
+                  <Button>
                     <Plus className="h-4 w-4 mr-1" />
                     New Group
                   </Button>
                 </Link>
                 
-                <div className="ml-4 flex items-center space-x-2">
-                  <Link
-                    to="/profile"
-                    className="p-1 rounded-full text-gray-400 hover:text-gray-500 transition-colors"
-                  >
-                    <span className="sr-only">View profile</span>
-                    <User className="h-6 w-6" />
-                  </Link>
-                  
-                  <Link
-                    to="/settings"
-                    className="p-1 rounded-full text-gray-400 hover:text-gray-500 transition-colors"
-                  >
-                    <span className="sr-only">Settings</span>
-                    <Settings className="h-6 w-6" />
-                  </Link>
-                  
-                  <button
-                    onClick={() => {
-                      logout();
-                      navigate('/');
-                    }}
-                    className="p-1 rounded-full text-gray-400 hover:text-gray-500 transition-colors"
-                  >
-                    <span className="sr-only">Sign out</span>
-                    <LogOut className="h-6 w-6" />
-                  </button>
-                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                      <Avatar>
+                        <AvatarFallback className='text-white'>
+                          {user.name.split(' ').map(n => n[0]).join('')}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuItem onClick={() => navigate('/profile')}>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/settings')}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => {
+                        logout();
+                        navigate('/');
+                      }}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             ) : (
               <div className="flex space-x-4">
                 <Button
-                  variant="outline"
-                  size="sm"
+                  className={dark ? 'text-white bg-gray-900' : ''}
+                  variant="ghost"
                   onClick={() => navigate('/auth')}
                 >
                   Log in
                 </Button>
                 <Button
-                  variant="primary"
-                  size="sm"
                   onClick={() => navigate('/auth?register=true')}
                 >
                   Sign up
@@ -100,113 +124,8 @@ const Header: React.FC = () => {
               </div>
             )}
           </div>
-          
-          <div className="-mr-2 flex items-center sm:hidden">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"
-            >
-              <span className="sr-only">Open main menu</span>
-              {mobileMenuOpen ? (
-                <X className="block h-6 w-6" />
-              ) : (
-                <Menu className="block h-6 w-6" />
-              )}
-            </button>
-          </div>
         </div>
       </div>
-      
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="sm:hidden">
-          <div className="pt-2 pb-3 space-y-1">
-            {user ? (
-              <>
-                <Link
-                  to="/dashboard"
-                  className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="/groups"
-                  className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  My Groups
-                </Link>
-                <Link
-                  to="/activity"
-                  className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Activity
-                </Link>
-                <Link
-                  to="/groups/new"
-                  className="block pl-3 pr-4 py-2 border-l-4 border-teal-500 text-base font-medium text-teal-700 bg-teal-50"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  New Group
-                </Link>
-                <div className="border-t border-gray-200 pt-4 pb-3">
-                  <div className="mt-3 space-y-1">
-                    <Link
-                      to="/profile"
-                      className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Your Profile
-                    </Link>
-                    <Link
-                      to="/settings"
-                      className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Settings
-                    </Link>
-                    <button
-                      onClick={() => {
-                        logout();
-                        navigate('/');
-                        setMobileMenuOpen(false);
-                      }}
-                      className="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-                    >
-                      Sign out
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="pt-4 pb-3 border-t border-gray-200">
-                <div className="flex items-center justify-center space-x-4">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      navigate('/auth');
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    Log in
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      navigate('/auth?register=true');
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    Sign up
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </header>
   );
 };

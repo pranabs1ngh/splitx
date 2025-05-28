@@ -9,6 +9,7 @@ import GroupsList from './pages/GroupsList';
 import CreateGroup from './pages/CreateGroup';
 import GroupDetails from './pages/GroupDetails';
 import Profile from './pages/Profile';
+import ResetPassword from './pages/ResetPassword';
 
 // Protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -26,6 +27,7 @@ const AppContent: React.FC = () => {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/auth" element={<Auth />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       
       <Route 
         path="/dashboard" 
