@@ -33,7 +33,7 @@ const Header: React.FC = ({ dark }) => {
               <CreditCard className={`h-8 w-8 ${text}`} />
               <span className={`ml-2 text-xl ${text} font-bold`}>SplitX</span>
             </Link>
-            {user && (
+            {/* {user && (
               <NavigationMenu className="ml-6">
                 <NavigationMenuList>
                   <NavigationMenuItem>
@@ -62,7 +62,7 @@ const Header: React.FC = ({ dark }) => {
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
-            )}
+            )} */}
           </div>
           
           <div className="flex items-center">
