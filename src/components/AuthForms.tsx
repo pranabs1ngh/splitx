@@ -110,7 +110,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <h2 className="text-xl font-semibold text-gray-800">Create your account</h2>
+        <h2 className="text-xl font-semibold text-gray-50">Create your account</h2>
       </CardHeader>
       <CardBody>
         <form onSubmit={handleSubmit}>
