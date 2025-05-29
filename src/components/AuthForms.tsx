@@ -74,6 +74,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
           Don't have an account?{' '}
           <button
             onClick={onSwitchToRegister}
+            disabled={isLoading}
             className="text-black-600 hover:text-black-500 font-medium"
           >
             Sign up

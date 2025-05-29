@@ -176,12 +176,12 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
               type="submit"
               fullWidth
               isLoading={isSubmitting}
-              disabled={!fromUser || !toUser || !amount}
+              disabled={!fromUser || !toUser || !amount || isSubmitting}
             >
               Record Settlement
               {isSubmitting && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
             </Button>
-            <Button onClick={onCancel} variant="outline" className='ml-2'>
+            <Button onClick={onCancel} variant="outline" disabled={isSubmitting} className='ml-2'>
               Cancel
             </Button>
           </div>

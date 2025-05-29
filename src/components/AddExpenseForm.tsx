@@ -146,11 +146,11 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
           </div>
           
           <div className="mt-4">
-            <Button type="submit" fullWidth isLoading={isSubmitting}>
+            <Button type="submit" fullWidth  disabled={isSubmitting} isLoading={isSubmitting}>
               Add Expense
               {isSubmitting && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
             </Button>
-            <Button onClick={onCancel} variant="outline" className='ml-2' fullWidth>
+            <Button onClick={onCancel} variant="outline" disabled={isSubmitting} className='ml-2' fullWidth>
               Cancel
             </Button>
           </div>
