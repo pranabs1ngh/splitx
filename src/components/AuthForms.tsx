@@ -66,6 +66,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
           </div>
           <Button type="submit" fullWidth isLoading={isLoading}>
             Log in
+            {isLoading && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
           </Button>
         </form>
       </CardContent>
@@ -78,7 +79,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
             className="text-black-600 hover:text-black-500 font-medium"
           >
             Sign up
-            {isLoading && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
           </button>
         </p>
       </CardFooter>
@@ -161,6 +161,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
           />
           <Button type="submit" fullWidth isLoading={isLoading}>
             Create Account
+            {isLoading && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
           </Button>
         </form>
       </CardContent>
@@ -172,7 +173,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             className="text-black-600 hover:text-black-500 font-medium"
           >
             Log in
-            {isLoading && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
           </button>
         </p>
       </CardFooter>
