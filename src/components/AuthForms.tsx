@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import Input from './ui/Input';
 import {Button} from './ui/Button';
 import { Card, CardHeader, CardContent, CardFooter } from './ui/Card';
+import { Loader2 } from 'lucide-react';
 
 interface LoginFormProps {
   onSwitchToRegister: () => void;
@@ -76,6 +77,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
             className="text-black-600 hover:text-black-500 font-medium"
           >
             Sign up
+            {isLoading && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
           </button>
         </p>
       </CardFooter>
@@ -169,6 +171,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             className="text-black-600 hover:text-black-500 font-medium"
           >
             Log in
+            {isLoading && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
           </button>
         </p>
       </CardFooter>

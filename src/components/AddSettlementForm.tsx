@@ -4,6 +4,7 @@ import { User, Balance } from '../types';
 import { Card, CardHeader, CardContent } from './ui/Card';
 import {Button} from './ui/Button';
 import Input from './ui/Input';
+import { Loader2 } from 'lucide-react';
 
 interface AddSettlementFormProps {
   groupId: string;
@@ -178,6 +179,7 @@ const AddSettlementForm: React.FC<AddSettlementFormProps> = ({
               disabled={!fromUser || !toUser || !amount}
             >
               Record Settlement
+              {isSubmitting && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
             </Button>
             <Button onClick={onCancel} variant="outline" className='ml-2'>
               Cancel

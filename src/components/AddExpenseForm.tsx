@@ -4,6 +4,7 @@ import { User } from '../types';
 import {Card, CardHeader, CardContent } from './ui/Card';
 import {Button} from './ui/Button';
 import Input from './ui/Input';
+import { Loader2 } from 'lucide-react';
 
 interface AddExpenseFormProps {
   groupId: string;
@@ -147,6 +148,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({
           <div className="mt-4">
             <Button type="submit" fullWidth isLoading={isSubmitting}>
               Add Expense
+              {isSubmitting && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
             </Button>
             <Button onClick={onCancel} variant="outline" className='ml-2' fullWidth>
               Cancel
